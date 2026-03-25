@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة المرشحين - منصة قرار</title>
+    
+    <!-- الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+
+/* Footer Fix */
+.bg-footer {
+  background-color: #004d4b;
+}
+
+/* عنوان الفوتر */
+.footer-border-title {
+  border-right: 4px solid white;
+  padding-right: 12px;
+  font-weight: bold;
+}
+
+/* تحسين الفوتر */
+footer {
+  direction: rtl;
+}
+
+/* تحسين النصوص */
+footer p {
+  line-height: 1.8;
+}
+
+/* تحسين القوائم */
+footer ul li {
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+footer ul li:hover {
+  opacity: 1;
+  transform: translateX(-5px);
+}
+
+/* تحسين الزر */
+footer button {
+  transition: 0.3s;
+}
+
+footer button:hover {
+  transform: scale(1.05);
+}
+
+/* تحسين الانبوت */
+footer input:focus {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.3);
+}
+
+
+        body { font-family: 'Tajawal', sans-serif; background-color: #f9fafb; }
+        .bg-teal-main { background-color: #00797d; }
+        .text-teal-main { color: #00797d; }
+        .bg-footer-dark { background-color: #004d4d; }
+
+        .hero-section {
+            background-image: url('img/step1 (2).jpeg');
+            background-size: cover; background-position: center; height: 400px; position: relative;
+        }
+        .hero-banner {
+            background-color: rgba(0, 121, 125, 0.9); color: white; padding: 15px 80px 15px 40px;
+            font-size: 24px; font-weight: 800; position: absolute; right: 0; top: 20%;
+        }
+
+        .search-bar-container {
+            display: flex; align-items: stretch; background: white; border: 1px solid #e5e7eb;
+            border-radius: 12px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            max-width: 950px; margin: 0 auto;
+        }
+        .search-btn { background-color: #006b6b; color: white; padding: 0 25px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; }
+        .search-btn:hover { background-color: #004d4d; }
+        .search-input { flex-grow: 1; padding: 12px 20px; border: none; outline: none; font-size: 14px; color: #444; }
+        .filter-select { border-right: 1px solid #eee; padding: 0 12px; font-size: 13px; color: #718096; background: white; outline: none; cursor: pointer; }
+
+        .candidate-card {
+            background: white; border: 1px solid #f0f0f0; border-radius: 12px; overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .candidate-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1); }
+
+        .divider-title {
+            display: flex; align-items: center; text-align: center; color: #a0aec0; font-size: 12px; font-weight: bold; margin: 50px 0;
+        }
+        .divider-title::before, .divider-title::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
+        .divider-title:not(:empty)::before { margin-left: .50em; }
+        .divider-title:not(:empty)::after { margin-right: .50em; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fadeIn { animation: fadeIn 0.5s ease forwards; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-white border-b py-3 px-10 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+        <div class="flex items-center gap-10">
+            <img src="img/log.png" alt="Logo" class="h-10">
+                        <nav class="hidden lg:flex gap-8 text-gray-600 font-bold">
+                    <a href="index.html" class="text-teal-brand border-b-2 border-[#006967] pb-1">الرئيسية</a>
+                    <a href="polling.html" class="hover:text-teal-brand transition">مركز الاقتراع</a>
+                    <a href="candidates.html" class="hover:text-teal-brand transition">المرشحون</a>
+                    <a href="#" class="hover:text-teal-brand transition">النتائج</a>
+                </nav>
+        </div>
+         <!-- منصة الموظفين -->
+            <a href="Login.html" class="text-teal-brand font-bold text-sm hover:underline transition">منصة الموظفين</a>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-banner">قائمة المرشحين</div>
+    </section>
+
+    <!-- البحث والفلترة -->
+    <section class="max-w-6xl mx-auto py-16 px-4 text-center">
+        <h2 class="text-[#005a5d] text-2xl font-black mb-4">تعرف على المرشحين في دائرتك</h2>
+        <p class="text-gray-500 text-sm mb-10">استعرض قائمة المرشحين وتعرف على برامجهم الانتخابية قبل الإدلاء بصوتك</p>
+        
+        <div class="search-bar-container">
+            <div class="search-btn" id="searchTrigger"><i class="fas fa-search"></i> <span class="mr-2">ابحث</span></div>
+            <input type="text" id="nameInput" class="search-input" placeholder="ابحث عن اسم المرشح أو القائمة...">
+            
+            <!-- القائمة المحدثة حسب الصورة -->
+            <select id="districtFilter" class="filter-select">
+                <option value="">الدائرة الانتخابية</option>
+                <option>العاصمة - الأولى</option>
+                <option>العاصمة - الثانية</option>
+                <option>العاصمة - الثالثة</option>
+                <option>اربد - الأولى</option>
+                <option>اربد - الثانية</option>
+                <option>البلقاء</option>
+                <option>الكرك</option>
+                <option>معان</option>
+                <option>المفرق</option>
+                <option>الطفيلة</option>
+                <option>جرش</option>
+                <option>عجلون</option>
+                <option>العقبة</option>
+                <option>بدو الشمال</option>
+                <option>بدو الوسط</option>
+                <option>بدو الجنوب</option>
+            </select>
+
+            <!-- القائمة المحدثة حسب الصورة -->
+            <select id="listFilter" class="filter-select border-none">
+                <option value="">القائمة الانتخابية</option>
+                <option>الأولى</option>
+                <option>الثانية</option>
+                <option>الثالثة</option>
+                <option>الرابعة</option>
+                <option>الخامسة</option>
+                <option>السادسة</option>
+                <option>السابعة</option>
+            </select>
+        </div>
+    </section>
+
+    <main class="max-w-6xl mx-auto pb-20 px-6">
+        <div class="divider-title">جميع المرشحين</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="candidatesGrid"></div>
+        <div class="flex justify-center mt-16">
+            <button id="loadMoreBtn" class="bg-[#005a5d] text-white px-14 py-3 rounded-full font-bold text-sm shadow-xl hover:bg-[#004d4d] transition-all transform hover:scale-105">
+                عرض المزيد من المرشحين
+            </button>
+        </div>
+    </main>
+
+    <!-- المودال -->
+    <div id="programModal" class="hidden fixed inset-0 z-[100] bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl animate-fadeIn">
+            <button onclick="closeModal()" class="absolute top-4 left-4 text-gray-400 hover:text-red-500 transition text-2xl">
+                <i class="fas fa-times-circle"></i>
+            </button>
+            <div class="text-center">
+                <div class="w-24 h-24 rounded-full border-4 border-teal-main mx-auto mb-4 overflow-hidden">
+                    <img src="img/step3.jpeg" class="w-full h-full object-cover">
+                </div>
+                <h3 id="modalName" class="text-2xl font-black text-gray-800 mb-1">اسم المرشح</h3>
+                <p id="modalInfo" class="text-teal-main font-bold text-sm mb-6"></p>
+                <div class="text-right border-t pt-6 h-64 overflow-y-auto">
+                    <h4 class="font-black text-[#005a5d] mb-4"><i class="fas fa-scroll ml-2"></i> البرنامج الانتخابي:</h4>
+                    <p id="modalText" class="text-gray-600 leading-relaxed text-sm"></p>
+                </div>
+                <button onclick="closeModal()" class="mt-8 bg-gray-100 text-gray-600 px-8 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+   
+    <script>
+        const allCandidates = [
+            { name: "فاطمة العبد الله", list: "الأولى", dist: "العاصمة - الأولى", program: "التركيز على تمكين الشباب والتحول الرقمي في المؤسسات الحكومية." },
+            { name: "أحمد الزعبي", list: "الثانية", dist: "اربد - الأولى", program: "تطوير القطاع الزراعي في الشمال وحماية حقوق صغار المزارعين." },
+            { name: "سارة الحويطات", list: "الثالثة", dist: "بدو الجنوب", program: "تحسين الخدمات الصحية في البادية ودعم السياحة الصحراوية." },
+            { name: "خالد بني هاني", list: "الأولى", dist: "اربد - الثانية", program: "مراجعة السياسات الضريبية وتعزيز الشفافية البرلمانية." },
+            { name: "منى الرواشدة", list: "الرابعة", dist: "الكرك", program: "تفعيل دور المرأة في المجالس المحلية وتحفيز الاستثمار في الجنوب." },
+            { name: "ياسين المناصير", list: "الخامسة", dist: "العاصمة - الثالثة", program: "حلول النقل العام الذكية وتحسين البنية التحتية في العاصمة." },
+            { name: "زيد الفايز", list: "الأولى", dist: "بدو الوسط", program: "توفير فرص عمل لأبناء البادية ودعم المشاريع الريفية." },
+            { name: "هيا المجالي", list: "الثانية", dist: "الكرك", program: "دعم التعليم المهني وربط الخريجين بسوق العمل المحلي." },
+            { name: "عمر قاسم", list: "السابعة", dist: "البلقاء", program: "حماية البيئة والموارد المائية وتطوير الخدمات السياحية في السلط." }
+        ];
+
+        let visibleCount = 6;
+        let filteredResults = [...allCandidates];
+
+        const grid = document.getElementById('candidatesGrid');
+        const loadBtn = document.getElementById('loadMoreBtn');
+
+        function render() {
+            grid.innerHTML = "";
+            const toShow = filteredResults.slice(0, visibleCount);
+            toShow.forEach(item => {
+                grid.innerHTML += `
+                <div class="candidate-card animate-fadeIn group">
+                    <div class="h-48 bg-gray-100 overflow-hidden relative">
+                        <img src="img/step3.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-black text-gray-800 mb-2">${item.name}</h4>
+                        <div class="flex items-center justify-center gap-2 text-teal-main mb-1">
+                            <i class="fas fa-users text-[10px]"></i> <span class="text-[11px] font-bold">قائمة ${item.list}</span>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 text-gray-400 mb-6">
+                            <i class="fas fa-map-marker-alt text-[10px]"></i> <span class="text-[10px]">${item.dist}</span>
+                        </div>
+                        <button onclick="openModal('${item.name}')" class="w-full bg-[#00797d] text-white py-2.5 rounded-lg text-xs font-bold hover:bg-[#005a5d] transition shadow-md">عرض البرنامج الانتخابي</button>
+                    </div>
+                </div>`;
+            });
+            loadBtn.style.display = (visibleCount >= filteredResults.length) ? "none" : "block";
+        }
+
+        function filter() {
+            const name = document.getElementById('nameInput').value.toLowerCase();
+            const dist = document.getElementById('districtFilter').value;
+            const list = document.getElementById('listFilter').value;
+            filteredResults = allCandidates.filter(c => 
+                (c.name.includes(name) || c.list.includes(name)) && (dist === "" || c.dist === dist) && (list === "" || c.list === list)
+            );
+            visibleCount = 6; render();
+        }
+
+        function openModal(name) {
+            const c = allCandidates.find(x => x.name === name);
+            document.getElementById('modalName').innerText = c.name;
+            document.getElementById('modalInfo').innerText = `قائمة ${c.list} | ${c.dist}`;
+            document.getElementById('modalText').innerText = c.program;
+            document.getElementById('programModal').classList.remove('hidden');
+        }
+
+        function closeModal() { document.getElementById('programModal').classList.add('hidden'); }
+
+        loadBtn.addEventListener('click', () => { visibleCount += 3; render(); });
+        document.getElementById('nameInput').addEventListener('input', filter);
+        document.getElementById('districtFilter').addEventListener('change', filter);
+        document.getElementById('listFilter').addEventListener('change', filter);
+        document.getElementById('searchTrigger').addEventListener('click', filter);
+
+        render();
+    </script>
+
+ <!-- Footer -->
+<footer class="bg-footer text-white pt-12 pb-8">
+    <div class="container mx-auto px-4 lg:px-20">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+            <div class="md:w-1/3 flex justify-start order-1">
+                <img src="img/log2 (2).png" alt="Logo Footer" class="h-24 object-contain">
+            </div>
+            <div class="md:w-2/3 order-2">
+                <p class="text-sm md:text-md opacity-100 leading-relaxed text-right md:text-left text-white">
+                    منصة رقمية تهدف إلى تعزيز الثقافة في الحملة الانتخابية من خلال توفير معلومات واضحة حول مركز الاقتراع ، المرشحين، ونتائج الانتخابات.
+                </p>
+            </div>
+        </div>
+
+        <hr class="border-white/10 mb-10">
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-right">
+            <div>
+                <h4 class="footer-border-title mb-6 text-lg">الخدمات</h4>
+                <ul class="space-y-4 text-sm opacity-80 text-white">
+                    <li>خطوات التصويت</li>
+                    <li>الأمان والشفافية</li>
+                    <li>مركز المساعدة</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-border-title mb-6 text-lg">روابط سريعة</h4>
+                <ul class="space-y-4 text-sm opacity-80 text-white">
+                    <li>الرئيسية</li>
+                    <li>مركز الاقتراع</li>
+                    <li>المرشحون</li>
+                    <li>النتائج</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-border-title mb-6 text-lg">المساعدة والدعم</h4>
+                <ul class="space-y-4 text-sm opacity-80 text-white">
+                    <li>الأسئلة الشائعة</li>
+                    <li>تواصل معنا</li>
+                    <li>سياسة الخصوصية</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-4 text-sm">ابحث عن مركز اقتراعك</h4>
+                <div class="flex flex-col gap-3">
+                    <input type="text" placeholder="أدخل رقمك الوطني" 
+                        class="p-3 rounded-xl text-gray-800 outline-none w-full bg-white shadow-sm text-sm">
+                    
+                    <button class="bg-white text-[#004d4b] font-bold py-2.5 px-8 rounded-full w-fit hover:bg-gray-100 transition shadow-md self-start text-xs">
+                        بحث الآن
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-white/10 mt-16 mb-8">
+
+        <div class="text-center text-xs opacity-50">
+            <p>© 2024 منصة قرار - جميع الحقوق محفوظة</p>
+        </div>
+    </div>
+</footer>
+<script>
+  const links = document.querySelectorAll('nav a');
+  const currentPage = window.location.pathname.split('/').pop();
+
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+
+    // شيل الـ active من الكل
+    link.classList.remove('border-b-2', 'border-[#006967]', 'pb-1');
+
+    // حدد الصفحة الحالية
+    if (href === currentPage || (href === "index.html" && currentPage === "")) {
+      link.classList.add('border-b-2', 'border-[#006967]', 'pb-1', 'text-teal-brand');
+    }
+  });
+</script>
+
+</body>
+</html>

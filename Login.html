@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - منصة قرار</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background-color: #f1f5f9; /* خلفية هادئة تبرز اللون البترولي */
+        }
+
+        /* اللون البترولي المأخوذ من الصورة التي أرفقتها */
+        .bg-brand-teal { background-color: #005963; }
+        .text-brand-teal { color: #005963; }
+        .border-brand-teal { border-color: #005963; }
+
+        /* تدوير الحواف بشكل احترافي */
+        .rounded-custom { border-radius: 1rem; }
+
+        /* لضمان الترتيب: اللوغو يمين والفورم يسار في الـ Desktop */
+        .main-container {
+            display: flex;
+            flex-direction: row; /* في RTL العنصر الأول (اللوغو) يظهر يمين */
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                gap: 3rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+    <div class="container mx-auto max-w-6xl main-container">
+        
+        <!-- القسم الأيمن: الشعار (Logo) -->
+        <div class="w-full md:w-1/2 flex justify-center md:justify-end">
+            <img src="img/log.png" alt="Logo" class="w-[380px] md:w-[500px] h-auto object-contain">
+        </div>
+
+        <!-- القسم الأيسر: نموذج تسجيل الدخول -->
+        <div class="w-full md:w-[450px]">
+            <!-- العناوين -->
+            <div class="text-center md:text-right mb-10">
+                <h1 class="text-3xl font-bold text-[#1e3a5a] mb-2">تسجيل الدخول</h1>
+                <p class="text-brand-teal text-sm font-medium">سجل الدخول لتحصل على جميع الخدمات</p>
+            </div>
+
+            <form action="#" class="space-y-6">
+                <!-- حقل اسم المستخدم -->
+                <div class="space-y-2">
+                    <label class="block text-gray-400 text-sm mr-2">اسم المستخدم</label>
+                    <div class="relative">
+                        <input type="text" placeholder="اسم المستخدم" 
+                            class="w-full p-4 pr-5 rounded-custom border border-gray-200 outline-none focus:border-brand-teal bg-white shadow-sm transition placeholder-gray-300">
+                        <!-- أيقونة العين على اليسار -->
+                        <i class="far fa-eye absolute left-5 top-1/2 -translate-y-1/2 text-gray-300 cursor-pointer"></i>
+                    </div>
+                </div>
+
+                <!-- حقل كلمة المرور -->
+                <div class="space-y-2">
+                    <label class="block text-gray-400 text-sm mr-2">كلمة المرور</label>
+                    <div class="relative">
+                        <input type="password" placeholder="كلمة المرور" 
+                            class="w-full p-4 pr-5 rounded-custom border border-gray-200 outline-none focus:border-brand-teal bg-white shadow-sm transition placeholder-gray-300">
+                        <i class="far fa-eye absolute left-5 top-1/2 -translate-y-1/2 text-gray-300 cursor-pointer"></i>
+                    </div>
+                </div>
+
+                <!-- تذكرني ونسيت كلمة السر -->
+                <div class="flex items-center justify-between px-2">
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="rem" class="w-4 h-4 rounded border-gray-300 text-brand-teal focus:ring-brand-teal">
+                        <label for="rem" class="text-xs text-gray-400">تذكرني</label>
+                    </div>
+                    <a href="#" class="text-xs text-brand-teal hover:underline">نسيت كلمة السر؟</a>
+                </div>
+
+                <!-- الأزرار باللون البترولي الجديد -->
+                <div class="space-y-4 pt-4">
+                    <!-- زر تسجيل الدخول (بترولي ممتلئ) -->
+                    <button type="submit" class="w-full bg-brand-teal text-white font-bold py-4 rounded-custom shadow-lg hover:opacity-90 transition text-lg">
+                        تسجيل الدخول
+                    </button>
+                    <!-- زر الرجوع (إطار بترولي) -->
+                    <a href="index.html" class="w-full block text-center border-2 border-brand-teal text-brand-teal font-bold py-3.5 rounded-custom hover:bg-white transition text-lg">
+                        الرجوع الى الرئيسية
+                    </a>
+                </div>
+            </form>
+
+            <!-- نص إنشاء حساب السفلي -->
+            <div class="mt-20 text-center">
+                <p class="text-[12px] text-gray-400">
+                    Don't have an account? <a href="#" class="text-brand-teal font-bold hover:underline">Sign up now</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
