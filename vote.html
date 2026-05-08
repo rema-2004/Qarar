@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة قرار | نظام التصويت الذكي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #0d9488; --bg: #f8fafc; }
+        
+        /* تم تعديل الـ body للسماح بالنزول */
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background-color: var(--bg); 
+            color: #1e293b; 
+            user-select: none; 
+            overflow-x: hidden; 
+            overflow-y: auto; 
+            min-height: 100vh;
+        }
+        
+        /* الشاشات تبدأ من الأعلى لضمان ظهور المحتوى كاملاً عند النزول */
+        .screen { 
+            display: none; 
+            min-height: 100vh; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start; 
+            padding: 2rem 1rem;
+            opacity: 0; 
+            transition: opacity 0.4s ease-in-out; 
+        }
+        
+        .screen.active { display: flex; opacity: 1; }
+        
+        /* شاشات الحالات الخاصة تبقى في المنتصف */
+        .centered-screen { justify-content: center !important; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .reveal { opacity: 0; }
+        .active .reveal { animation: fadeInUp 0.6s ease-out forwards; }
+
+        .glass-card { 
+            background: white; border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.12); }
+        
+        .selected-card { border: 4px solid #f97316 !important; background: #fff7ed !important; }
+
+        .loader { width: 80px; height: 80px; border: 8px solid #f3f3f3; border-top: 8px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* شريط التمرير أنيق */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body>
+
+    <main>
+        <!-- 1. شاشة البداية -->
+        <section id="step-start" class="screen centered-screen active text-center bg-white">
+            <div class="reveal mb-12 relative">
+                <div class="absolute inset-0 bg-teal-400 blur-[100px] opacity-20 rounded-full scale-150"></div>
+                <div class="w-44 h-44 bg-white rounded-[50px] shadow-2xl flex items-center justify-center mx-auto relative border border-teal-50">
+                    <svg class="w-24 h-24 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+            </div>
+            <h1 class="reveal text-5xl font-black text-slate-800 mb-6 tracking-tight">منصة قرار الذكية</h1>
+            <p class="reveal text-slate-500 text-2xl mb-12 max-w-xl mx-auto font-medium">مرحباً بك في محطة التصويت. يرجى الضغط للبدء باختيار من يمثلك.</p>
+            <button onclick="showScreen('step-voting')" class="reveal bg-teal-600 hover:bg-teal-700 text-white px-24 py-7 rounded-[30px] text-3xl font-black shadow-[0_25px_60px_rgba(13,148,136,0.4)] transition-all active:scale-95">
+                ابدأ عملية التصويت
+            </button>
+        </section>
+
+        <!-- 2. شاشة القوائم (16 قائمة) -->
+        <section id="step-voting" class="screen">
+            <div class="w-full max-w-7xl pt-10">
+                <div class="reveal mb-12 border-r-8 border-teal-600 pr-8">
+                    <h2 class="text-4xl font-black text-slate-800">الخطوة الأولى: اختر القائمة</h2>
+                    <p class="text-slate-500 text-xl mt-2 font-medium">اختر قائمة انتخابية واحدة للمتابعة إلى مرشحيها:</p>
+                </div>
+                <!-- تمت إزالة الـ max-height للسماح بالنزول الطبيعي -->
+                <div id="lists-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pb-20"></div>
+            </div>
+        </section>
+
+        <!-- 3. شاشة المرشحين (4 لكل قائمة) -->
+        <section id="step-candidates" class="screen">
+            <div class="w-full max-w-7xl pt-10">
+                <div class="reveal mb-10 flex flex-col md:flex-row justify-between items-start md:items-end border-r-8 border-orange-500 pr-8 gap-4">
+                    <div>
+                        <h2 class="text-4xl font-black text-slate-800">الخطوة الثانية: اختر المرشحين</h2>
+                        <p id="list-name-display" class="text-orange-600 font-bold text-2xl mt-2 tracking-wide"></p>
+                    </div>
+                    <button onclick="showScreen('step-voting')" class="text-slate-400 font-bold text-lg hover:text-teal-600 underline pb-2">← تغيير القائمة</button>
+                </div>
+
+                <div id="candidates-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10"></div>
+
+                <!-- زر التأكيد يبقى أسفل المحتوى ليظهر بعد النزول -->
+                <div class="reveal py-10 flex justify-center w-full">
+                    <button id="confirmBtn" onclick="openModal()" disabled class="w-full max-w-2xl py-6 bg-slate-300 text-white rounded-[30px] text-3xl font-black shadow-lg">
+                        تأكيد التصويت النهائي
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. المودال -->
+        <div id="confirm-modal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-2xl z-50 flex items-center justify-center p-6">
+            <div class="bg-white rounded-[50px] p-8 md:p-12 max-w-lg w-full text-center shadow-2xl border-t-8 border-teal-600 max-h-[90vh] overflow-y-auto">
+                <h2 class="text-3xl font-black text-slate-800 mb-8">تأكيد خيارات التصويت</h2>
+                <div class="bg-slate-50 rounded-[35px] p-8 text-right mb-10 shadow-inner">
+                    <div class="mb-6">
+                        <span class="text-slate-400 text-sm font-bold block mb-1">القائمة المختارة:</span>
+                        <p id="modal-list" class="text-2xl font-black text-teal-700"></p>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 text-sm font-bold block mb-1">المرشحون المختارون:</span>
+                        <div id="modal-candidates-list" class="flex flex-wrap gap-2 mt-2"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <button onclick="finalizeVote()" class="w-full py-6 bg-teal-600 text-white rounded-[25px] font-black text-2xl shadow-xl hover:bg-teal-700">تسجيل التصويت</button>
+                    <button onclick="closeModal()" class="text-slate-400 font-bold text-lg">العودة للتعديل</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. شاشة التحميل -->
+        <section id="step-loading" class="screen centered-screen bg-white">
+            <div class="loader mb-10"></div>
+            <h2 class="text-4xl font-black text-slate-800">جاري تسجيل صوتك...</h2>
+        </section>
+
+        <!-- 6. شاشة النجاح -->
+        <section id="step-success" class="screen centered-screen bg-white text-center">
+            <div class="w-44 h-44 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-12 shadow-inner scale-125">
+                <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4"><path d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-6xl font-black text-slate-800 mb-8">تم بنجاح!</h2>
+            <p class="text-4xl text-teal-600 font-black leading-relaxed">تم تسجيل صوتك بنجاح. <br> نشكر مشاركتك في صنع القرار.</p>
+        </section>
+
+        <!-- 7. شاشة القفل -->
+        <section id="step-wait" class="screen centered-screen bg-white p-10 text-center">
+            <div class="mb-14 opacity-20 scale-125">
+                <svg class="w-48 h-48 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </div>
+            <h1 class="text-5xl font-bold text-gray-400 mb-6">يرجى الانتظار</h1>
+            <p class="text-gray-300 text-2xl font-medium max-w-2xl mx-auto leading-relaxed">سيقوم الموظف بتفعيل شاشة التصويت بعد التحقق من الهوية</p>
+        </section>
+    </main>
+
+    <script>
+        const listNames = [
+            "قائمة جبل عمان", "قائمة العهد والوفاء", "قائمة الكرامة الوطنية", "قائمة فرسان التغيير",
+            "قائمة النهضة والبناء", "قائمة صوت الشعب", "قائمة المستقبل المشرق", "قائمة الاتحاد الوطني",
+            "قائمة أردن العطاء", "قائمة المسار الصحيح", "قائمة إرادة الجيل", "قائمة الحق والعدالة",
+            "قائمة فجر الحرية", "قائمة الوفاق المحلي", "قائمة بناة الغد", "قائمة الاستقلال والنمو"
+        ];
+
+        const allCandidatesPool = ["أحمد العبادي", "سارة العدوان", "عمر المجالي", "محمد الزعبي", "ليلى الفايز", "خالد القضاة", "نور الحباشنة", "باسل العتوم"];
+
+        const partyData = listNames.map((name, i) => ({
+            name: name,
+            num: (i + 1).toString().padStart(2, '0'),
+            candidates: [...allCandidatesPool].sort(() => Math.random() - 0.5).slice(0, 4)
+        }));
+
+        let selectedList = null;
+        let selectedCandidates = [];
+
+        function renderLists() {
+            const grid = document.getElementById('lists-grid');
+            grid.innerHTML = '';
+            partyData.forEach((party, idx) => {
+                const card = document.createElement('div');
+                card.className = "glass-card reveal p-6 rounded-[40px] cursor-pointer flex items-center justify-between";
+                card.onclick = () => {
+                    selectedList = party; selectedCandidates = [];
+                    document.getElementById('list-name-display').innerText = `${party.name} - رقم القائمة (${party.num})`;
+                    renderCandidates(party.candidates);
+                    showScreen('step-candidates');
+                };
+                card.innerHTML = `<div class="flex items-center gap-7"><div class="w-20 h-20 bg-teal-50 text-[#0d9488] rounded-[28px] flex items-center justify-center font-black text-4xl shadow-inner border border-teal-100">${party.num}</div><h3 class="font-bold text-slate-700 text-2xl">${party.name}</h3></div><div class="w-10 h-10 rounded-full border-4 border-slate-100 bg-white"></div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderCandidates(candidates) {
+            const grid = document.getElementById('candidates-grid');
+            grid.innerHTML = '';
+            candidates.forEach((name, i) => {
+                const card = document.createElement('div');
+                card.className = "glass-card reveal p-5 rounded-[45px] flex flex-col items-center gap-4 cursor-pointer text-center relative overflow-hidden";
+                
+                const isSelected = selectedCandidates.includes(name);
+                if(isSelected) card.classList.add('selected-card');
+
+                card.onclick = () => {
+                    if (selectedCandidates.includes(name)) {
+                        selectedCandidates = selectedCandidates.filter(c => c !== name);
+                    } else {
+                        selectedCandidates.push(name);
+                    }
+                    renderCandidates(candidates);
+                    
+                    const btn = document.getElementById('confirmBtn');
+                    btn.disabled = false;
+                    btn.className = "w-full max-w-2xl py-6 bg-teal-600 text-white rounded-[30px] text-3xl font-black shadow-2xl transition-all active:scale-95";
+                };
+
+                card.innerHTML = `
+                    <div class="relative w-full">
+                        <img src="img/step3.jpeg" class="w-full aspect-square object-cover rounded-[35px] border border-slate-100 shadow-sm">
+                        <div class="absolute top-4 right-4 w-12 h-12 bg-white/90 text-teal-600 rounded-2xl flex items-center justify-center font-black text-2xl shadow-lg border-2 border-white">${i+1}</div>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-2xl leading-tight">${name}</h3>
+                    <div class="w-full py-4 mt-2 rounded-2xl font-black text-xl transition-colors ${isSelected ? 'bg-orange-500 text-white' : 'bg-green-600 text-white'}">
+                        ${isSelected ? 'تم الاختيار' : 'اختيار المرشح'}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal() {
+            document.getElementById('modal-list').innerText = `${selectedList.name} (${selectedList.num})`;
+            const container = document.getElementById('modal-candidates-list');
+            container.innerHTML = selectedCandidates.length === 0 
+                ? '<p class="text-slate-400 font-bold italic">تصويت للقائمة فقط</p>' 
+                : selectedCandidates.map(c => `<span class="bg-teal-100 text-teal-800 px-4 py-2 rounded-full font-bold border border-teal-200">${c}</span>`).join('');
+            document.getElementById('confirm-modal').classList.remove('hidden');
+        }
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => { 
+                s.classList.remove('active'); 
+                s.style.display = 'none'; 
+            });
+            const active = document.getElementById(id); 
+            active.style.display = 'flex';
+            setTimeout(() => active.classList.add('active'), 50); 
+            
+            // إعادة التمرير للأعلى عند تغيير الشاشة
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeModal() { document.getElementById('confirm-modal').classList.add('hidden'); }
+
+        function finalizeVote() {
+            closeModal(); showScreen('step-loading');
+            setTimeout(() => { 
+                showScreen('step-success'); 
+                setTimeout(() => showScreen('step-wait'), 4500); 
+            }, 3500);
+        }
+
+        renderLists();
+    </script>
+</body>
+</html>
