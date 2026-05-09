@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<!-- saved from url=(0133)file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?# -->
+<html lang="ar" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التطوع | منصة قرار</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./volanteer_files/css2" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#0f8f8f;
+      --primary-dark:#0a6d6d;
+      --primary-light:#e7f8f7;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --border:#d9e1e7;
+      --danger:#e74c3c;
+      --bg:#f7f9fb;
+      --white:#ffffff;
+      --shadow:0 10px 35px rgba(0,0,0,.08);
+      --radius:18px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Cairo',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.7;
+      overflow-x:hidden;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    .container{
+      width:min(1200px,92%);
+      margin:auto;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    header{
+      background:#fff;
+      box-shadow:0 2px 12px rgba(0,0,0,.04);
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+.navbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:78px;
+}
+
+/* الجهة اليمين */
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:45px;
+}
+
+/* اللوقو */
+.logo{
+  display:flex;
+  align-items:center;
+}
+
+.logo-image{
+  height:58px;
+  width:auto;
+  object-fit:contain;
+}
+
+/* الروابط */
+nav{
+  display:flex;
+  align-items:center;
+  gap:40px;
+}
+
+nav a{
+  font-size:16px;
+  font-weight:700;
+  color:#374151;
+  position:relative;
+  transition:.3s;
+}
+
+nav a:hover,
+nav a.active{
+  color:#0f8f8f;
+}
+
+nav a.active::after{
+  content:"";
+  position:absolute;
+  bottom:-10px;
+  right:0;
+  width:100%;
+  height:3px;
+  background:#0f8f8f;
+  border-radius:10px;
+}
+
+/* النص اليسار */
+.platform-text{
+  font-size:18px;
+  font-weight:700;
+  color:#111827;
+}
+
+    .mobile-toggle{
+      display:none;
+      width:50px;
+      height:50px;
+      border:none;
+      background:var(--primary-light);
+      border-radius:14px;
+      cursor:pointer;
+      font-size:22px;
+      color:var(--primary-dark);
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero{
+      position:relative;
+      min-height:420px;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+      linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+      url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2070&auto=format&fit=crop');
+      background-size:cover;
+      background-position:center;
+      transform:scale(1.02);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      width:100%;
+      display:flex;
+      justify-content:flex-start;
+    }
+
+    .hero-card{
+      width:420px;
+      background:rgba(15,143,143,.9);
+      backdrop-filter:blur(10px);
+      color:#fff;
+      padding:45px;
+      border-radius:0 0 0 40px;
+      box-shadow:var(--shadow);
+      animation:fadeUp .8s ease;
+    }
+
+    .hero-card h1{
+      font-size:44px;
+      margin-bottom:10px;
+      font-weight:800;
+    }
+
+    .hero-card p{
+      font-size:18px;
+      opacity:.95;
+    }
+
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform:translateY(40px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    /* =========================
+       SECTIONS
+    ========================== */
+
+    section{
+      padding:80px 0;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:50px;
+    }
+
+    .section-title h2{
+      font-size:36px;
+      color:var(--primary-dark);
+      margin-bottom:10px;
+    }
+
+    .section-title p{
+      color:var(--muted);
+      max-width:700px;
+      margin:auto;
+    }
+
+    /* =========================
+       WHY US
+    ========================== */
+
+    .why-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:60px;
+      align-items:center;
+    }
+
+    .illustration{
+      background:#fff;
+      border-radius:30px;
+      padding:30px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .illustration::before{
+      content:"";
+      position:absolute;
+      width:220px;
+      height:220px;
+      background:var(--primary-light);
+      border-radius:50%;
+      top:-80px;
+      left:-80px;
+    }
+
+    .illustration img{
+      position:relative;
+      z-index:2;
+      border-radius:20px;
+    }
+
+    .features{
+      display:flex;
+      flex-direction:column;
+      gap:25px;
+    }
+
+    .feature{
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      background:#fff;
+      padding:22px;
+      border-radius:18px;
+      box-shadow:0 5px 20px rgba(0,0,0,.05);
+      transition:.35s;
+    }
+
+    .feature:hover{
+      transform:translateY(-5px);
+    }
+
+    .feature-icon{
+      min-width:58px;
+      height:58px;
+      border-radius:16px;
+      background:var(--primary-light);
+      color:var(--primary);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+      font-weight:700;
+    }
+
+    .feature h3{
+      margin-bottom:5px;
+      color:var(--primary-dark);
+    }
+
+    .feature p{
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    /* =========================
+       BENEFITS
+    ========================== */
+
+    .benefits-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:24px;
+    }
+
+    .benefit-card{
+      background:#fff;
+      border-radius:22px;
+      padding:35px 25px;
+      text-align:center;
+      box-shadow:var(--shadow);
+      transition:.4s;
+      border:1px solid transparent;
+    }
+
+    .benefit-card:hover{
+      transform:translateY(-10px);
+      border-color:#b7ecec;
+    }
+
+    .benefit-icon{
+      width:80px;
+      height:80px;
+      margin:auto auto 20px;
+      border-radius:24px;
+      background:linear-gradient(135deg,var(--primary-light),#fff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:38px;
+      color:var(--primary);
+    }
+
+    .benefit-card h3{
+      margin-bottom:12px;
+      color:var(--primary-dark);
+    }
+
+    .benefit-card p{
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    /* =========================
+       FORM
+    ========================== */
+
+    .form-wrapper{
+      background:#fff;
+      border-radius:32px;
+      padding:45px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .steps{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:45px;
+      gap:20px;
+    }
+
+    .step{
+      flex:1;
+      text-align:center;
+      position:relative;
+    }
+
+    .step:not(:last-child)::before{
+      content:"";
+      position:absolute;
+      top:18px;
+      left:-50%;
+      width:100%;
+      height:3px;
+      background:#dfe8ee;
+      z-index:1;
+    }
+
+    .step.active:not(:last-child)::before{
+      background:var(--primary);
+    }
+
+    .step-number{
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      background:#dfe8ee;
+      color:#666;
+      margin:auto auto 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      position:relative;
+      z-index:2;
+      transition:.3s;
+    }
+
+    .step.active .step-number{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 8px 18px rgba(15,143,143,.3);
+    }
+
+    .step span{
+      font-size:14px;
+      color:#6b7280;
+      font-weight:700;
+    }
+
+    .step.active span{
+      color:var(--primary-dark);
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:24px;
+    }
+
+    .form-group{
+      position:relative;
+    }
+
+    .form-group.full{
+      grid-column:1/-1;
+    }
+
+    label{
+      display:block;
+      margin-bottom:10px;
+      font-weight:700;
+      color:#374151;
+    }
+
+    .input-wrapper{
+      position:relative;
+    }
+
+    input,
+    select,
+    textarea{
+      width:100%;
+      height:58px;
+      border:2px solid var(--border);
+      border-radius:16px;
+      padding:0 18px;
+      font-family:'Cairo',sans-serif;
+      font-size:15px;
+      transition:.3s;
+      background:#fff;
+      outline:none;
+    }
+
+    textarea{
+      height:140px;
+      resize:none;
+      padding-top:18px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 5px rgba(15,143,143,.12);
+    }
+
+    .input-icon{
+      position:absolute;
+      left:18px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#9ca3af;
+      font-size:18px;
+      pointer-events:none;
+    }
+
+    .error input,
+    .error select,
+    .error textarea{
+      border-color:var(--danger);
+      box-shadow:0 0 0 5px rgba(231,76,60,.08);
+    }
+
+    .error-message{
+      color:var(--danger);
+      font-size:13px;
+      margin-top:8px;
+      display:none;
+      font-weight:700;
+    }
+
+    .error .error-message{
+      display:block;
+    }
+
+    .form-actions{
+      display:flex;
+      gap:16px;
+      margin-top:35px;
+    }
+
+    .btn{
+      height:56px;
+      border:none;
+      border-radius:16px;
+      padding:0 32px;
+      font-family:'Cairo',sans-serif;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.35s;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--primary),#14b8b8);
+      color:#fff;
+      flex:1;
+      box-shadow:0 12px 25px rgba(15,143,143,.25);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-3px);
+    }
+
+    .btn-outline{
+      background:#fff;
+      border:2px solid var(--primary);
+      color:var(--primary);
+      min-width:180px;
+    }
+
+    .btn-outline:hover{
+      background:var(--primary-light);
+    }
+
+    /* =========================
+       LOADING & SUCCESS
+    ========================== */
+
+    .state-card{
+      max-width:520px;
+      margin:40px auto;
+      background:#fff;
+      border-radius:28px;
+      padding:55px 40px;
+      text-align:center;
+      box-shadow:var(--shadow);
+      display:none;
+    }
+
+    .state-card.active{
+      display:block;
+      animation:fadeScale .4s ease;
+    }
+
+    @keyframes fadeScale{
+      from{
+        opacity:0;
+        transform:scale(.95);
+      }
+      to{
+        opacity:1;
+        transform:scale(1);
+      }
+    }
+
+    .spinner{
+      width:80px;
+      height:80px;
+      margin:0 auto 25px;
+      border:6px solid #dff4f4;
+      border-top-color:var(--primary);
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+    }
+
+    @keyframes spin{
+      to{
+        transform:rotate(360deg);
+      }
+    }
+
+    .success-icon{
+      width:95px;
+      height:95px;
+      background:#22c55e;
+      color:#fff;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 25px;
+      font-size:48px;
+      box-shadow:0 18px 35px rgba(34,197,94,.3);
+    }
+
+    .state-card h3{
+      font-size:32px;
+      margin-bottom:10px;
+      color:var(--primary-dark);
+    }
+
+    .state-card p{
+      color:var(--muted);
+      margin-bottom:25px;
+    }
+
+    .success-actions{
+      display:flex;
+      gap:16px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    /* =========================
+       FAQ
+    ========================== */
+
+    .faq-list{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .faq-item{
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 5px 18px rgba(0,0,0,.05);
+    }
+
+    .faq-question{
+      padding:24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      transition:.3s;
+      font-weight:700;
+    }
+
+    .faq-question:hover{
+      background:#f8fbfb;
+    }
+
+    .faq-icon{
+      transition:.3s;
+      font-size:22px;
+      color:var(--primary);
+    }
+
+    .faq-answer{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .4s ease;
+      color:#6b7280;
+      padding:0 24px;
+    }
+
+    .faq-item.active .faq-answer{
+      max-height:200px;
+      padding:0 24px 24px;
+    }
+
+    .faq-item.active .faq-icon{
+      transform:rotate(180deg);
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer{
+      background:linear-gradient(135deg,#064e4e,#0f8f8f);
+      color:#fff;
+      padding-top:70px;
+      margin-top:60px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      gap:50px;
+    }
+
+    .footer-logo{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      font-size:28px;
+      font-weight:800;
+      margin-bottom:18px;
+    }
+
+    .footer-about p{
+      opacity:.9;
+      margin-bottom:25px;
+    }
+
+    .newsletter{
+      display:flex;
+      gap:12px;
+      margin-top:20px;
+    }
+
+    .newsletter input{
+      border:none;
+      height:52px;
+    }
+
+    .newsletter button{
+      min-width:140px;
+    }
+
+    .footer-links h4{
+      margin-bottom:18px;
+      font-size:20px;
+    }
+
+    .footer-links a{
+      display:block;
+      margin-bottom:12px;
+      opacity:.9;
+      transition:.3s;
+    }
+
+    .footer-links a:hover{
+      transform:translateX(-5px);
+      opacity:1;
+    }
+
+    .copyright{
+      border-top:1px solid rgba(255,255,255,.15);
+      margin-top:50px;
+      padding:25px 0;
+      text-align:center;
+      opacity:.9;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media(max-width:992px){
+
+      nav{
+        position:fixed;
+        top:80px;
+        right:-100%;
+        width:300px;
+        height:calc(100vh - 80px);
+        background:#fff;
+        flex-direction:column;
+        align-items:flex-start;
+        padding:40px;
+        transition:.4s;
+        box-shadow:-10px 0 30px rgba(0,0,0,.08);
+      }
+
+      nav.active{
+        right:0;
+      }
+
+      .mobile-toggle{
+        display:block;
+      }
+
+      .why-grid,
+      .footer-grid,
+      .benefits-grid,
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-card{
+        width:100%;
+        border-radius:30px;
+      }
+
+      .steps{
+        flex-wrap:wrap;
+      }
+    }
+
+    @media(max-width:768px){
+
+      .hero{
+        min-height:360px;
+      }
+
+      .hero-card{
+        padding:35px 28px;
+      }
+
+      .hero-card h1{
+        font-size:34px;
+      }
+
+      .section-title h2{
+        font-size:30px;
+      }
+
+      .form-wrapper{
+        padding:28px;
+      }
+
+      .form-actions{
+        flex-direction:column;
+      }
+
+      .success-actions{
+        flex-direction:column;
+      }
+    }
+
+    @media(max-width:520px){
+
+      .navbar{
+        min-height:72px;
+      }
+
+      .hero-card h1{
+        font-size:28px;
+      }
+
+      .hero-card p{
+        font-size:15px;
+      }
+
+      .state-card{
+        padding:40px 22px;
+      }
+
+      .section-title h2{
+        font-size:26px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+<div class="container navbar">
+
+  <!-- الجهة اليمين -->
+  <div class="nav-right">
+
+  <!-- اللوقو -->
+  <div class="logo">
+  <img src="./volanteer_files/log.png" alt="logo" class="logo-image">
+</div>
+
+  
+
+  
+    <nav id="navMenu">
+      <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#" class="active">الرئيسية</a>
+      <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">مركز الاقتراع</a>
+      <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">المرشحون</a>
+      <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">النتائج</a>
+      <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">المتطوعين</a>
+    </nav>
+
+  </div>
+
+  <!-- الجهة اليسار -->
+  <div class="platform-text">
+    منصة الموظفين
+  </div>
+
+</div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-content">
+      <div class="hero-card">
+        <h1>التطوع</h1>
+        <p>
+          كن جزءاً من فريق المتطوعين وساهم في دعم العملية الانتخابية
+          وخدمة المجتمع بكفاءة واحترافية.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section>
+    <div class="container">
+
+      <div class="section-title">
+        <h2>لماذا التطوع معنا؟</h2>
+        <p>
+          يساهم المتطوعون في نجاح العملية الانتخابية من خلال المشاركة المجتمعية
+          وتنظيم الفعاليات والمساعدة في تقديم الدعم اللوجستي.
+        </p>
+      </div>
+
+      <div class="why-grid">
+
+        <div class="illustration">
+          <img src="./volanteer_files/photo-1521737604893-d14cc237f11d" alt="">
+        </div>
+
+        <div class="features">
+
+          <div class="feature">
+            <div class="feature-icon">✓</div>
+            <div>
+              <h3>دعم العملية الانتخابية</h3>
+              <p>المساهمة في تنظيم الفعاليات وتسهيل سير الانتخابات.</p>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">★</div>
+            <div>
+              <h3>خدمة المجتمع</h3>
+              <p>كن جزءاً من مبادرة وطنية تساهم في خدمة المواطنين.</p>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <div>
+              <h3>اكتساب الخبرة</h3>
+              <p>تطوير مهاراتك العملية واكتساب خبرات مهنية جديدة.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section>
+    <div class="container">
+
+      <div class="section-title">
+        <h2>مزايا التطوع</h2>
+        <p>
+          انضم إلى فريقنا واستفد من العديد من الفرص التطوعية والمهنية.
+        </p>
+      </div>
+
+      <div class="benefits-grid">
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🏆</div>
+          <h3>شهادة مشاركة</h3>
+          <p>الحصول على شهادة تقدير بعد إتمام فترة التطوع.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🤝</div>
+          <h3>تنمية المهارات</h3>
+          <p>تعزيز قدراتك الشخصية والتنظيمية والعمل الجماعي.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🌍</div>
+          <h3>خدمة المجتمع</h3>
+          <p>المساهمة في خدمة الوطن والمجتمع بشكل فعال.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">📚</div>
+          <h3>اكتساب الخبرة</h3>
+          <p>اكتساب خبرات عملية وتطوير المهارات المهنية.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section>
+    <div class="container">
+
+      <div class="section-title">
+        <h2>استمارة طلب التطوع</h2>
+        <p>
+          يرجى تعبئة البيانات التالية بدقة ليتم مراجعة طلبك والتواصل معك.
+        </p>
+      </div>
+
+      <div class="form-wrapper" id="formWrapper">
+
+        <!-- STEPS -->
+        <div class="steps">
+
+          <div class="step active">
+            <div class="step-number">1</div>
+            <span>المعلومات الشخصية</span>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <span>الخبرات</span>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <span>المهارات</span>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <span>التأكيد</span>
+          </div>
+
+        </div>
+
+        <!-- FORM -->
+        <form id="volunteerForm">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label>الاسم الكامل *</label>
+              <div class="input-wrapper">
+                <input type="text" id="fullName" placeholder="أدخل اسمك الكامل">
+                <span class="input-icon">👤</span>
+              </div>
+              <div class="error-message">الرجاء إدخال الاسم الكامل</div>
+            </div>
+
+            <div class="form-group">
+              <label>البريد الإلكتروني *</label>
+              <div class="input-wrapper">
+                <input type="email" id="email" placeholder="example@email.com">
+                <span class="input-icon">✉</span>
+              </div>
+              <div class="error-message">الرجاء إدخال بريد إلكتروني صحيح</div>
+            </div>
+
+            <div class="form-group">
+              <label>رقم الهاتف *</label>
+              <div class="input-wrapper">
+                <input type="text" id="phone" placeholder="0791234567">
+                <span class="input-icon">📞</span>
+              </div>
+              <div class="error-message">الرجاء إدخال رقم هاتف أردني صحيح</div>
+            </div>
+
+            <div class="form-group">
+              <label>المدينة / المحافظة *</label>
+              <div class="input-wrapper">
+                <select id="city">
+                  <option value="">اختر المدينة / المحافظة</option>
+                  <option>عمان</option>
+                  <option>الزرقاء</option>
+                  <option>إربد</option>
+                  <option>العقبة</option>
+                  <option>جرش</option>
+                  <option>السلط</option>
+                  <option>الكرك</option>
+                </select>
+                <span class="input-icon">📍</span>
+              </div>
+              <div class="error-message">الرجاء اختيار المدينة</div>
+            </div>
+
+            <div class="form-group">
+              <label>العمر *</label>
+              <div class="input-wrapper">
+                <input type="number" id="age" placeholder="أدخل عمرك">
+                <span class="input-icon">📅</span>
+              </div>
+              <div class="error-message">الرجاء إدخال عمر صحيح</div>
+            </div>
+
+            <div class="form-group">
+              <label>المهارات *</label>
+              <div class="input-wrapper">
+                <input type="text" id="skills" placeholder="التواصل، التنظيم، العمل الجماعي">
+                <span class="input-icon">⚡</span>
+              </div>
+              <div class="error-message">الرجاء إدخال المهارات</div>
+            </div>
+
+            <div class="form-group full">
+              <label>نبذة قصيرة</label>
+              <div class="input-wrapper">
+                <textarea placeholder="اكتب نبذة مختصرة عن خبراتك التطوعية السابقة..."></textarea>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              إرسال الطلب
+            </button>
+
+            <button type="reset" class="btn btn-outline">
+              إلغاء
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+      <!-- LOADING STATE -->
+      <div class="state-card" id="loadingState">
+
+        <div class="spinner"></div>
+
+        <h3>جاري إرسال الطلب...</h3>
+
+        <p>يرجى الانتظار</p>
+
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="state-card" id="successState">
+
+        <div class="success-icon">✓</div>
+
+        <h3>تم إرسال طلب التطوع بنجاح</h3>
+
+        <p>
+          سيتم مراجعة طلبك والتواصل معك قريباً
+        </p>
+
+        <div class="success-actions">
+
+          <button class="btn btn-primary">
+            العودة للرئيسية
+          </button>
+
+          <button class="btn btn-outline" id="newRequestBtn">
+            تقديم طلب آخر
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-about">
+
+          <div class="footer-logo">
+            <div class="logo-circle">ق</div>
+            منصة قرار
+          </div>
+
+          <p>
+            منصة وطنية تهدف إلى دعم العملية الانتخابية وتعزيز المشاركة المجتمعية
+            من خلال التطوع والمساهمة الفعالة.
+          </p>
+
+          <div class="newsletter">
+            <input type="email" placeholder="أدخل بريدك الإلكتروني">
+            <button class="btn btn-primary">
+              اشتراك
+            </button>
+          </div>
+
+        </div>
+
+        <div class="footer-links">
+          <h4>روابط سريعة</h4>
+
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">الرئيسية</a>
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">عن الهيئة</a>
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">الانتخابات</a>
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">المرشحون</a>
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">تواصل معنا</a>
+        </div>
+
+        <div class="footer-links">
+          <h4>الخدمات</h4>
+
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">التطوع</a>
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">الاستفسارات</a>
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">الفعاليات</a>
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">الدعم الفني</a>
+          <a href="file:///C:/Users/nasee/OneDrive%20-%20AHU/Desktop/%D8%A7%D9%86%D8%A7%20%D8%A7%D8%B4%D8%A7%D8%B1%D9%83/Volunteer%20Registration.html?#">الأسئلة الشائعة</a>
+        </div>
+
+      </div>
+
+      <div class="copyright">
+        جميع الحقوق محفوظة © 2026 منصة قرار
+      </div>
+
+    </div>
+
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+
+    // MOBILE MENU
+    const menuBtn = document.getElementById("menuBtn");
+    const navMenu = document.getElementById("navMenu");
+
+    menuBtn.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+    });
+
+    // FAQ ACCORDION
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(item => {
+      const question = item.querySelector(".faq-question");
+
+      question.addEventListener("click", () => {
+
+        faqItems.forEach(faq => {
+          if(faq !== item){
+            faq.classList.remove("active");
+          }
+        });
+
+        item.classList.toggle("active");
+      });
+    });
+
+    // FORM VALIDATION
+    const form = document.getElementById("volunteerForm");
+    const formWrapper = document.getElementById("formWrapper");
+    const loadingState = document.getElementById("loadingState");
+    const successState = document.getElementById("successState");
+    const newRequestBtn = document.getElementById("newRequestBtn");
+
+    const fields = {
+      fullName: {
+        element: document.getElementById("fullName"),
+        validate: value => value.trim().length >= 3
+      },
+
+      email: {
+        element: document.getElementById("email"),
+        validate: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+      },
+
+      phone: {
+        element: document.getElementById("phone"),
+        validate: value => /^(07)(7|8|9)\d{7}$/.test(value)
+      },
+
+      city: {
+        element: document.getElementById("city"),
+        validate: value => value !== ""
+      },
+
+      age: {
+        element: document.getElementById("age"),
+        validate: value => value >= 18 && value <= 60
+      },
+
+      skills: {
+        element: document.getElementById("skills"),
+        validate: value => value.trim().length >= 2
+      }
+    };
+
+    // SHOW ERROR
+    function showError(input){
+      input.closest(".form-group").classList.add("error");
+    }
+
+    // REMOVE ERROR
+    function removeError(input){
+      input.closest(".form-group").classList.remove("error");
+    }
+
+    // LIVE VALIDATION
+    Object.values(fields).forEach(field => {
+
+      field.element.addEventListener("input", () => {
+
+        if(field.validate(field.element.value)){
+          removeError(field.element);
+        }
+      });
+
+    });
+
+    // SUBMIT
+    form.addEventListener("submit", function(e){
+
+      e.preventDefault();
+
+      let isValid = true;
+
+      Object.values(fields).forEach(field => {
+
+        const input = field.element;
+
+        if(!field.validate(input.value)){
+          showError(input);
+          isValid = false;
+        } else {
+          removeError(input);
+        }
+
+      });
+
+      if(!isValid){
+        return;
+      }
+
+      // SHOW LOADING
+      formWrapper.style.display = "none";
+      loadingState.classList.add("active");
+
+      setTimeout(() => {
+
+        loadingState.classList.remove("active");
+        successState.classList.add("active");
+
+      },2000);
+
+    });
+
+    // RESET FORM
+    newRequestBtn.addEventListener("click", () => {
+
+      successState.classList.remove("active");
+
+      formWrapper.style.display = "block";
+
+      form.reset();
+
+      document.querySelectorAll(".form-group").forEach(group => {
+        group.classList.remove("error");
+      });
+
+      window.scrollTo({
+        top: formWrapper.offsetTop - 100,
+        behavior:"smooth"
+      });
+
+    });
+
+  </script>
+
+
+
+
+
+</body></html>
