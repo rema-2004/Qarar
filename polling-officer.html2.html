@@ -1,12 +1,841 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qarar Voting System</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>التحقق من الناخبين - قرار</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    * {
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background: #f0f4f4;
+      padding-bottom: 70px;
+    }
+
+    .teal {
+      color: #006967;
+    }
+
+    .bg-teal {
+      background: #006967;
+    }
+
+    header {
+      background: #006967;
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #aaa;
+    }
+
+    .step-item.active,
+    .step-item.done {
+      color: #006967;
+    }
+
+    .step-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .step-item.active .step-dot,
+    .step-item.done .step-dot {
+      border-color: #006967;
+      background: #006967;
+      color: white;
+    }
+
+    .step-arrow {
+      color: #ccc;
+      margin: 0 8px;
+      font-size: 13px;
+    }
+
+    .voter-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .voter-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 14px;
+    }
+
+    .voter-row:last-child {
+      border: none;
+    }
+
+    .badge-ok,
+    .badge-err,
+    .badge-eye {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge-ok {
+      background: #dcfce7;
+    }
+
+    .badge-err {
+      background: #fee2e2;
+    }
+
+    .badge-eye {
+      background: #e0f2f1;
+    }
+
+    .inp {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+      width: 100%;
+    }
+
+    .inp:focus {
+      border-color: #006967;
+    }
+
+    .btn-teal {
+      background: #006967;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      width: 100%;
+    }
+
+    .btn-teal:hover {
+      background: #004d4b;
+    }
+
+    .btn-outline {
+      background: white;
+      color: #006967;
+      border: 2px solid #006967;
+      border-radius: 12px;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      width: 100%;
+    }
+
+    .btn-outline:hover {
+      background: #f0fdf4;
+    }
+
+    video {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 16px;
+      background: #111;
+      transform: scaleX(-1);
+      display: block;
+    }
+
+    .scan-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .eye-frame {
+      position: absolute;
+      inset: 20px;
+      border: 2.5px dashed #00a99d;
+      border-radius: 16px;
+      pointer-events: none;
+      transition: all 0.4s;
+    }
+
+    .eye-frame.green {
+      border-color: #22c55e;
+      border-style: solid;
+      box-shadow: 0 0 0 5px rgba(34,197,94,0.2);
+    }
+
+    .scan-line {
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00c9b7, transparent);
+      border-radius: 50px;
+      animation: scanMove 2s infinite linear;
+      pointer-events: none;
+    }
+
+    @keyframes scanMove {
+      0% {
+        top: 30px;
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        top: 210px;
+        opacity: 0;
+      }
+    }
+
+    .cd {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      background: rgba(0,105,103,0.88);
+      color: white;
+      font-size: 34px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .cd.show {
+      opacity: 1;
+    }
+
+    .prog-bar {
+      height: 6px;
+      background: #d1fae5;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .prog-fill {
+      height: 100%;
+      background: #006967;
+      border-radius: 10px;
+      width: 0%;
+      transition: width 1s linear;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      background: #006967;
+      color: white;
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .steps {
+        gap: 10px;
+      }
+
+      .step-arrow {
+        display: none;
+      }
+
+      footer {
+        position: static;
+        margin-top: 30px;
+      }
+    }
+  </style>
 </head>
-<body style="font-family:Arial;text-align:center;padding:50px;">
-  <h1>Qarar Voting System</h1>
-  <p>تم تجهيز الملف بنجاح 🔥</p>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="img/log.png" alt="قرار" style="height:36px;filter:brightness(10);" onerror="this.style.display='none'">
+      <span>قـرار</span>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:16px;">
+      <i class="fas fa-bell" style="font-size:18px;opacity:0.85;"></i>
+
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:14px;">كمال أحمد</span>
+
+        <div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-user" style="font-size:16px;"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width:700px;margin:0 auto;padding:28px 16px 80px;">
+
+    <h1 style="font-size:22px;font-weight:700;color:#111;margin-bottom:24px;border-right:4px solid #006967;padding-right:12px;">
+      التحقق من الناخبين
+    </h1>
+
+    <div class="steps" id="stepsBar">
+      <div class="step-item active" id="st1">
+        <div class="step-dot">1</div>
+        <span>التحقق بالهوية</span>
+      </div>
+
+      <div class="step-arrow">
+        <i class="fas fa-chevron-left"></i>
+      </div>
+
+      <div class="step-item" id="st2">
+        <div class="step-dot">2</div>
+        <span>مسح بصمة العين</span>
+      </div>
+
+      <div class="step-arrow">
+        <i class="fas fa-chevron-left"></i>
+      </div>
+
+      <div class="step-item" id="st3">
+        <div class="step-dot">3</div>
+        <span>فتح جلسة التصويت</span>
+      </div>
+    </div>
+
+    <div id="screenA" class="fade-in">
+      <div class="voter-card">
+
+        <div style="text-align:center;margin-bottom:20px;">
+          <div class="badge-eye" style="margin:0 auto 14px;">
+            <i class="fas fa-shield-halved" style="font-size:24px;color:#006967;"></i>
+          </div>
+
+          <h2 style="font-size:17px;font-weight:700;color:#111;margin-bottom:4px;">
+            ابدأ مسح الهوية
+          </h2>
+
+          <p style="font-size:12px;color:#9ca3af;">
+            قم بتوجيه الكاميرا للحصول على المعلومات الخاصة بالناخب
+          </p>
+        </div>
+
+        <div style="border:2px dashed #d1d5db;border-radius:14px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;background:#fafafa;margin-bottom:20px;">
+          <div style="width:160px;height:100px;border:2px dashed #9ca3af;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-top:3px solid #006967;border-right:3px solid #006967;border-radius:2px;"></div>
+            <div style="position:absolute;top:-2px;left:-2px;width:18px;height:18px;border-top:3px solid #006967;border-left:3px solid #006967;border-radius:2px;"></div>
+            <div style="position:absolute;bottom:-2px;right:-2px;width:18px;height:18px;border-bottom:3px solid #006967;border-right:3px solid #006967;border-radius:2px;"></div>
+            <div style="position:absolute;bottom:-2px;left:-2px;width:18px;height:18px;border-bottom:3px solid #006967;border-left:3px solid #006967;border-radius:2px;"></div>
+          </div>
+
+          <p style="font-size:12px;color:#9ca3af;">
+            يتم توجيه الكاميرا نحو الهوية
+          </p>
+
+          <button class="btn-teal" style="width:auto;padding:10px 28px;" onclick="startIDScan(event)">
+            ابدأ مسح الهوية
+          </button>
+        </div>
+
+        <div style="text-align:center;font-size:13px;color:#9ca3af;margin-bottom:12px;">
+          أو
+        </div>
+
+        <p style="font-size:13px;font-weight:600;color:#374151;margin-bottom:8px;">
+          قم بإدخال الرقم الوطني للتحقق
+        </p>
+
+        <div style="display:flex;gap:10px;">
+          <input class="inp" id="nationalId" type="text" placeholder="أدخل الرقم الوطني" maxlength="10">
+
+          <button class="btn-teal" style="width:auto;padding:10px 22px;white-space:nowrap;" onclick="verifyByID()">
+            تحقق
+          </button>
+        </div>
+
+        <p style="font-size:11px;color:#9ca3af;margin-top:10px;">
+          للتجربة: أي رقم يعمل، والرقم 0000 يعطي حالة "تم التصويت".
+        </p>
+
+      </div>
+    </div>
+
+    <div id="screenB" class="hidden fade-in">
+      <div class="voter-card">
+
+        <div style="text-align:center;margin-bottom:16px;">
+          <div class="badge-eye" style="margin:0 auto 12px;">
+            <i class="fas fa-eye" style="font-size:24px;color:#006967;"></i>
+          </div>
+
+          <h2 style="font-size:17px;font-weight:700;color:#111;margin-bottom:4px;">
+            ضع العين داخل الإطار
+          </h2>
+        </div>
+
+        <div class="scan-wrap">
+          <video id="eyeCam" autoplay playsinline muted></video>
+          <div class="eye-frame" id="eyeFrameEl"></div>
+          <div class="scan-line"></div>
+          <div class="cd" id="eyeCD"></div>
+        </div>
+
+        <div class="prog-bar">
+          <div class="prog-fill" id="eyeProg"></div>
+        </div>
+
+        <p id="eyeStatusMsg" style="text-align:center;font-size:13px;color:#9ca3af;margin-top:8px;">
+          جاري التحقق من بصمة العين....
+        </p>
+
+        <div style="display:flex;gap:10px;margin-top:16px;">
+          <button class="btn-teal" onclick="resetAll()">
+            سجل هوية جديدة
+          </button>
+
+          <button class="btn-outline" onclick="retryEye()">
+            إعادة المحاولة
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="screenC" class="hidden fade-in">
+      <div class="voter-card">
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <div>
+            <h3 style="font-size:19px;font-weight:700;color:#111;">
+              محمد أحمد العلي
+            </h3>
+
+            <p style="font-size:13px;color:#9ca3af;">
+              **** 2578 9627
+            </p>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:54px;height:54px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-user" style="font-size:22px;color:#9ca3af;"></i>
+            </div>
+
+            <div class="badge-ok">
+              <i class="fas fa-check" style="color:#16a34a;font-size:22px;"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="voter-row">
+          <span style="color:#374151;">الدائرة الأولى - عمان</span>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-map-marker-alt" style="color:#006967;"></i>
+            <i class="fas fa-check" style="color:#16a34a;font-size:12px;"></i>
+          </div>
+        </div>
+
+        <div class="voter-row">
+          <span style="color:#374151;">مدرسة الملك عبد الله الأساسية</span>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-school" style="color:#006967;"></i>
+            <i class="fas fa-check" style="color:#16a34a;font-size:12px;"></i>
+          </div>
+        </div>
+
+        <div class="voter-row">
+          <span style="color:#374151;">رقم القاعة 3</span>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-door-open" style="color:#006967;"></i>
+            <i class="fas fa-check" style="color:#16a34a;font-size:12px;"></i>
+          </div>
+        </div>
+
+        <div style="text-align:left;margin:14px 0 18px;">
+          <span style="color:#16a34a;font-weight:700;font-size:14px;">
+            لم يصوت بعد
+          </span>
+        </div>
+
+        <button class="btn-teal" onclick="openEyeScan()">
+          <i class="fas fa-eye ml-2"></i>
+          مسح بصمة العين
+        </button>
+
+      </div>
+    </div>
+
+    <div id="screenD" class="hidden fade-in">
+      <div class="voter-card">
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <div>
+            <h3 style="font-size:19px;font-weight:700;color:#111;">
+              محمد أحمد العلي
+            </h3>
+
+            <p style="font-size:13px;color:#9ca3af;">
+              **** 2578 9627
+            </p>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:54px;height:54px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-user" style="font-size:22px;color:#9ca3af;"></i>
+            </div>
+
+            <div class="badge-err">
+              <i class="fas fa-xmark" style="color:#dc2626;font-size:22px;"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="voter-row">
+          <span style="color:#374151;">الدائرة الأولى - عمان</span>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-map-marker-alt" style="color:#006967;"></i>
+            <i class="fas fa-check" style="color:#16a34a;font-size:12px;"></i>
+          </div>
+        </div>
+
+        <div class="voter-row">
+          <span style="color:#374151;">مدرسة الملك عبد الله الأساسية</span>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-school" style="color:#006967;"></i>
+            <i class="fas fa-xmark" style="color:#dc2626;font-size:12px;"></i>
+          </div>
+        </div>
+
+        <div class="voter-row">
+          <span style="color:#374151;">رقم القاعة 3</span>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-door-open" style="color:#006967;"></i>
+            <i class="fas fa-check" style="color:#16a34a;font-size:12px;"></i>
+          </div>
+        </div>
+
+        <div style="text-align:left;margin:14px 0 6px;">
+          <span style="color:#dc2626;font-weight:700;font-size:14px;">
+            تم التصويت
+          </span>
+        </div>
+
+        <div style="background:#fef2f2;border-radius:10px;padding:12px;font-size:13px;color:#b91c1c;margin-bottom:16px;">
+          لا يمكن فتح جلسة تصويت لأن الناخب قام بالتصويت مسبقاً.
+        </div>
+
+        <button class="btn-teal" onclick="resetAll()">
+          <i class="fas fa-rotate-right ml-2"></i>
+          التحقق من هوية ناخب جديد
+        </button>
+
+      </div>
+    </div>
+
+    <div id="screenE" class="hidden fade-in">
+      <div class="voter-card" style="text-align:center;">
+
+        <div style="width:72px;height:72px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+          <i class="fas fa-circle-check" style="font-size:36px;color:#16a34a;"></i>
+        </div>
+
+        <h2 style="font-size:19px;font-weight:700;color:#111;margin-bottom:6px;">
+          تم التحقق من هوية الناخب بنجاح
+        </h2>
+
+        <p style="font-size:13px;color:#9ca3af;margin-bottom:16px;">
+          بإمكانك الآن فتح جلسة التصويت على جهاز التصويت
+        </p>
+
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:14px;font-size:12px;color:#15803d;margin-bottom:20px;line-height:1.8;">
+          قم بالضغط على زر فتح جلسة التصويت، وسيتم توجيه الناخب للقائمة المخصصة له للتصويت على جهاز التصويت.
+        </div>
+
+        <button class="btn-teal" onclick="openVoteSession()">
+          <i class="fas fa-check-circle ml-2"></i>
+          فتح جلسة التصويت
+        </button>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span>موظف مركز الاقتراع</span>
+    <span>العاصمة - الدائرة الأولى</span>
+    <span>جهاز 1023</span>
+
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#4ade80;display:inline-block;"></span>
+      <span>متصل بالخادم</span>
+    </div>
+
+    <span>10:45 AM</span>
+  </footer>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    let camStream = null;
+
+    function hideAll() {
+      ['screenA', 'screenB', 'screenC', 'screenD', 'screenE'].forEach(id => {
+        $(id).classList.add('hidden');
+      });
+    }
+
+    function show(id) {
+      hideAll();
+      $(id).classList.remove('hidden');
+    }
+
+    function setStep(active) {
+      ['st1', 'st2', 'st3'].forEach((id, i) => {
+        const el = $(id);
+        const dot = el.querySelector('.step-dot');
+
+        el.className = 'step-item';
+
+        if (i + 1 < active) {
+          el.classList.add('done');
+          dot.innerHTML = '<i class="fas fa-check" style="font-size:9px;"></i>';
+        } else if (i + 1 === active) {
+          el.classList.add('active');
+          dot.textContent = i + 1;
+        } else {
+          dot.textContent = i + 1;
+        }
+      });
+    }
+
+    async function startCam(videoEl) {
+      try {
+        if (camStream) {
+          camStream.getTracks().forEach(track => track.stop());
+        }
+
+        camStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: 'user'
+          },
+          audio: false
+        });
+
+        videoEl.srcObject = camStream;
+
+        await new Promise(resolve => {
+          videoEl.onloadedmetadata = resolve;
+        });
+
+        await videoEl.play();
+
+      } catch (error) {
+        alert('يرجى السماح بالوصول إلى الكاميرا');
+      }
+    }
+
+    async function runCountdown(cdEl, progEl, seconds) {
+      for (let i = seconds; i >= 1; i--) {
+        cdEl.textContent = i;
+        cdEl.classList.add('show');
+
+        progEl.style.width = ((seconds + 1 - i) / seconds * 100) + '%';
+
+        await sleep(1000);
+      }
+
+      progEl.style.width = '100%';
+
+      await sleep(200);
+
+      cdEl.classList.remove('show');
+    }
+
+    function startIDScan(event) {
+      const btn = event.target;
+
+      btn.textContent = 'جاري المسح...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.textContent = 'ابدأ مسح الهوية';
+        btn.disabled = false;
+
+        setStep(1);
+        show('screenC');
+      }, 1500);
+    }
+
+    function verifyByID() {
+      const val = $('nationalId').value.trim();
+
+      if (!val) {
+        $('nationalId').focus();
+        return;
+      }
+
+      setStep(1);
+
+      if (val === '0000') {
+        show('screenD');
+      } else {
+        show('screenC');
+      }
+    }
+
+    async function openEyeScan() {
+      setStep(2);
+      show('screenB');
+
+      $('eyeFrameEl').classList.remove('green');
+      $('eyeProg').style.width = '0%';
+      $('eyeStatusMsg').textContent = 'قرّب عينك من الكاميرا داخل الإطار...';
+      $('eyeStatusMsg').style.color = '#9ca3af';
+
+      await startCam($('eyeCam'));
+
+      await sleep(1000);
+
+      $('eyeFrameEl').classList.add('green');
+      $('eyeStatusMsg').textContent = '✅ تم اكتشاف العين! جاري التحقق...';
+      $('eyeStatusMsg').style.color = '#16a34a';
+
+      await runCountdown($('eyeCD'), $('eyeProg'), 6);
+
+      $('eyeStatusMsg').textContent = '✅ تم التحقق من بصمة العين بنجاح!';
+
+      await sleep(700);
+
+      if (camStream) {
+        camStream.getTracks().forEach(track => track.stop());
+      }
+
+      setStep(3);
+      show('screenE');
+    }
+
+    function retryEye() {
+      $('eyeFrameEl').classList.remove('green');
+      $('eyeProg').style.width = '0%';
+      $('eyeStatusMsg').textContent = 'جاري التحقق من بصمة العين....';
+      $('eyeStatusMsg').style.color = '#9ca3af';
+
+      openEyeScan();
+    }
+
+    function openVoteSession() {
+      window.location.href = 'vote.html';
+    }
+
+    function resetAll() {
+      if (camStream) {
+        camStream.getTracks().forEach(track => track.stop());
+      }
+
+      $('nationalId').value = '';
+      $('eyeFrameEl').classList.remove('green');
+      $('eyeProg').style.width = '0%';
+      $('eyeStatusMsg').textContent = 'جاري التحقق من بصمة العين....';
+      $('eyeStatusMsg').style.color = '#9ca3af';
+
+      setStep(1);
+      show('screenA');
+    }
+
+    setStep(1);
+  </script>
+
 </body>
 </html>
