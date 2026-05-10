@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --primary: #0b5d61;
+            --secondary: #49c2d4;
+            --bg: #f4f3f8;
+            --white: #ffffff;
+            --border: #ececec;
+            --text: #333;
+            --muted: #888;
+            --shadow: 0 3px 14px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .navbar {
+            width: 100%;
+            height: 70px;
+            background: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 28px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        /* تعديل الشعار ليكون مستطيل بدل دائري */
+
+.logo img{
+    width: 60px;
+    height: 45px;
+    border-radius: 6px; /* بدل 50% */
+    object-fit: cover;
+}
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-icon {
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .user-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+     
+
+.user-box img{
+    width: 42px;
+    height: 42px;
+    border-radius: 8px; /* بدل 50% */
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,.25);
+}
+
+        .container {
+            max-width: 1300px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .page-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .line {
+            width: 5px;
+            height: 28px;
+            border-radius: 30px;
+            background: var(--primary);
+        }
+
+        .page-title h1 {
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .create-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 13px 22px;
+            border-radius: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .create-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: .3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .stat-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 15px;
+            background: #ecfbfd;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto auto 15px;
+            font-size: 22px;
+        }
+
+        .green-bg {
+            background: #e9fff0;
+            color: #36ba6c;
+        }
+
+        .stat-card h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            margin-bottom: 18px;
+        }
+
+        .card-header h2 {
+            font-size: 16px;
+        }
+
+        .side-card {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .mini-box {
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .mini-box span {
+            font-size: 13px;
+        }
+
+        .mini-box h4 {
+            margin-top: 5px;
+            font-size: 20px;
+        }
+
+        .red {
+            background: #ff6377;
+        }
+
+        .orange {
+            background: #ffb84d;
+        }
+
+        .green {
+            background: #3cbc71;
+        }
+
+        .details-btn {
+            margin-top: auto;
+            border: none;
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .table-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .table-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-top h2 {
+            font-size: 16px;
+        }
+
+        .status-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #fafafa;
+        }
+
+        th {
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 18px 15px;
+            border-bottom: 1px solid #efefef;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 18px;
+            font-size: 14px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        @media(max-width:1100px) {
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .analytics-grid,
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width:700px) {
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title,
+            .table-top,
+            .footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <!-- الهيدر كامل بعد التعديل -->
+
+<!-- الهيدر كامل بعد التعديل -->
+
+<header class="navbar">
+
+    <div class="nav-right">
+
+        <div class="user-box">
+
+            <img src="https://i.pravatar.cc/100" alt="">
+
+            <span>كمال احمد</span>
+
+        </div>
+
+        <i class="fa-solid fa-bell nav-icon"></i>
+
+    </div>
+
+    <div class="logo">
+
+        <img src="C:\Users\nasee\OneDrive - AHU\Desktop\انا اشارك\img\log.png" alt="">
+
+       
+
+    </div>
+
+</header>
+
+    <!-- MAIN -->
+    <main class="container">
+
+        <!-- PAGE TITLE -->
+        <div class="page-title">
+
+            <div class="title-section">
+                <div class="line"></div>
+                <h1>لوحة تحكم إدارة الانتخابات</h1>
+            </div>
+
+            <button class="create-btn">
+                <i class="fa-solid fa-plus"></i>
+                إنشاء تصويت جديد
+            </button>
+
+        </div>
+
+        <!-- STATS -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon green-bg">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+
+                <h3>حالة النظام</h3>
+                <p>متصل ومستقر</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+
+                <h3>عدد مراكز الاقتراع</h3>
+                <p>32 مركز</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-chart-column"></i>
+                </div>
+
+                <h3>إجمالي الأصوات</h3>
+                <p>195,300</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <h3>عدد الناخبين المسجلين</h3>
+                <p>1,257,000</p>
+
+            </div>
+
+        </section>
+
+        <!-- ANALYTICS -->
+        <section class="analytics-grid">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h2>تطور نسبة المشاركة خلال اليوم</h2>
+                </div>
+
+                <canvas id="lineChart"></canvas>
+
+            </div>
+
+            <div class="card side-card">
+
+                <div class="card-header">
+                    <h2>الإحصائيات العامة</h2>
+                </div>
+
+                <div class="mini-box red">
+
+                    <div>
+                        <span>عدد الشكاوى</span>
+                        <h4>124</h4>
+                    </div>
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+                <div class="mini-box orange">
+
+                    <div>
+                        <span>طلبات المراجعة</span>
+                        <h4>52</h4>
+                    </div>
+
+                    <i class="fa-solid fa-file-circle-check"></i>
+
+                </div>
+
+                <div class="mini-box green">
+
+                    <div>
+                        <span>المراكز النشطة</span>
+                        <h4>30</h4>
+                    </div>
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+                <button class="details-btn">
+                    عرض جميع الإحصائيات
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- SECOND CHARTS -->
+        <section class="charts-grid">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h2>تطور نسب المشاركة حسب المحافظات</h2>
+                </div>
+
+                <canvas id="barChart"></canvas>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h2>توزيع الأصوات حسب الجنس</h2>
+                </div>
+
+                <canvas id="doughnutChart"></canvas>
+
+            </div>
+
+        </section>
+
+        <!-- TABLE -->
+        <section class="table-section">
+
+            <div class="table-top">
+
+                <h2>أحدث حالة مراكز الاقتراع</h2>
+
+                <div class="status-group">
+
+                    <span class="status red">
+                        متوقف
+                    </span>
+
+                    <span class="status orange">
+                        قيد المراجعة
+                    </span>
+
+                    <span class="status green">
+                        نشط
+                    </span>
+
+                </div>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>المركز</th>
+                        <th>المحافظة</th>
+                        <th>عدد الناخبين</th>
+                        <th>الحالة</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>مركز عمان</td>
+                        <td>عمان</td>
+                        <td>2300</td>
+
+                        <td>
+                            <span class="badge green">
+                                نشط
+                            </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>مركز الزرقاء</td>
+                        <td>الزرقاء</td>
+                        <td>1900</td>
+
+                        <td>
+                            <span class="badge red">
+                                متوقف
+                            </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>مركز إربد</td>
+                        <td>إربد</td>
+                        <td>1700</td>
+
+                        <td>
+                            <span class="badge orange">
+                                مراجعة
+                            </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>مركز العقبة</td>
+                        <td>العقبة</td>
+                        <td>1500</td>
+
+                        <td>
+                            <span class="badge green">
+                                نشط
+                            </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>مركز الكرك</td>
+                        <td>الكرك</td>
+                        <td>1300</td>
+
+                        <td>
+                            <span class="badge red">
+                                متوقف
+                            </span>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <span>سياسة الخصوصية</span>
+        <span>الدعم الفني</span>
+        <span>© 2026 قرار</span>
+
+    </footer>
+
+    <script>
+        // LINE CHART
+        const lineCtx = document.getElementById('lineChart');
+
+        new Chart(lineCtx, {
+
+            type: 'line',
+
+            data: {
+
+                labels: ['8 ص', '9 ص', '10 ص', '11 ص', '12 م', '1 م', '2 م', '3 م', '4 م'],
+
+                datasets: [{
+
+                    data: [10, 15, 20, 30, 38, 45, 42, 55, 70],
+
+                    borderColor: '#49c2d4',
+
+                    backgroundColor: 'rgba(73,194,212,.12)',
+
+                    fill: true,
+
+                    tension: .4,
+
+                    pointRadius: 4,
+
+                    pointBackgroundColor: '#49c2d4',
+
+                    borderWidth: 3
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        grid: {
+                            color: '#ececec'
+                        }
+
+                    },
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        // BAR CHART
+        const barCtx = document.getElementById('barChart');
+
+        new Chart(barCtx, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: ['عمان', 'إربد', 'الزرقاء', 'العقبة', 'الكرك'],
+
+                datasets: [{
+
+                    data: [90, 82, 78, 70, 66],
+
+                    backgroundColor: '#67c9d9',
+
+                    borderRadius: 8
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        grid: {
+                            color: '#ececec'
+                        }
+
+                    },
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        // DOUGHNUT
+        const doughnutCtx = document.getElementById('doughnutChart');
+
+        new Chart(doughnutCtx, {
+
+            type: 'doughnut',
+
+            data: {
+
+                labels: ['ذكور', 'إناث'],
+
+                datasets: [{
+
+                    data: [60, 40],
+
+                    backgroundColor: ['#49c2d4', '#d3f4f8'],
+
+                    borderWidth: 0
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: '70%',
+
+                plugins: {
+
+                    legend: {
+
+                        position: 'bottom',
+
+                        labels: {
+
+                            usePointStyle: true,
+                            padding: 20
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>
