@@ -1,185 +1,54 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة قرار - تصويتك آمن وسري</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Tajawal -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         body { font-family: 'Tajawal', sans-serif; scroll-behavior: smooth; }
         
+        /* القسم العلوي - صورة واضحة */
         .hero-section {
             background-image: url('img/step5.jpeg');
             background-size: cover;
             background-position: center;
-            height: 500px;
+            height: 500px; /* تم تقليل الارتفاع قليلاً لتناسب الصندوق المصغر */
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
         }
 
+        /* ظل النصوص */
         .hero-text-shadow {
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8), 0px 0px 4px rgba(0, 0, 0, 1);
         }
 
+        /* الألوان المخصصة */
         .bg-teal-brand { background-color: #006967; }
         .bg-footer { background-color: #004d4b; }
         .text-teal-brand { color: #006967; }
         
+        /* سكرول بار الخطوات */
         .steps-scroll::-webkit-scrollbar { height: 6px; }
         .steps-scroll::-webkit-scrollbar-thumb { background: #006967; border-radius: 10px; }
 
+        /* ستايل العناوين في الفوتر */
         .footer-border-title {
             border-right: 4px solid white;
             padding-right: 12px;
             font-weight: bold;
         }
-
-        /* ================= CHAT BOT ================= */
-
-        #chat-container {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            z-index: 9999;
-        }
-
-        #chat-toggle {
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            border: none;
-            background: #006967;
-            color: white;
-            font-size: 26px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-            transition: 0.3s;
-        }
-
-        #chat-toggle:hover { transform: scale(1.08); }
-
-        #chat-box {
-            width: 350px;
-            height: 500px;
-            background: white;
-            border-radius: 25px;
-            overflow: hidden;
-            display: none;
-            flex-direction: column;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-            margin-bottom: 15px;
-        }
-
-        .chat-header {
-            background: #006967;
-            color: white;
-            padding: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-header h3 { margin: 0; font-size: 20px; font-weight: bold; }
-        .chat-header span { font-size: 13px; opacity: 0.85; }
-
-        #close-chat {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        #messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background: #f5f7f8;
-        }
-
-        .bot-message, .user-message {
-            padding: 12px 15px;
-            border-radius: 15px;
-            margin-bottom: 12px;
-            max-width: 85%;
-            line-height: 1.7;
-            font-size: 14px;
-        }
-
-        .bot-message {
-            background: white;
-            color: #222;
-            margin-left: auto;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .user-message {
-            background: #006967;
-            color: white;
-            margin-right: auto;
-        }
-
-        .chat-input-area {
-            display: flex;
-            border-top: 1px solid #eee;
-        }
-
-        .chat-input-area input {
-            flex: 1;
-            border: none;
-            padding: 15px;
-            outline: none;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 14px;
-        }
-
-        .chat-input-area button {
-            width: 70px;
-            border: none;
-            background: #006967;
-            color: white;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .typing-indicator {
-            display: flex;
-            gap: 5px;
-            padding: 12px 15px;
-            background: white;
-            border-radius: 15px;
-            margin-bottom: 12px;
-            width: fit-content;
-            margin-left: auto;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: #006967;
-            border-radius: 50%;
-            animation: bounce 1.2s infinite;
-        }
-
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes bounce {
-            0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-6px); }
-        }
     </style>
 </head>
-<body class="bg-white">
-
-   <header class="bg-white border-b py-3 sticky top-0 z-50 shadow-sm">
+<header class="bg-white border-b py-3 sticky top-0 z-50 shadow-sm">
     <div class="container mx-auto px-4 md:px-10 flex justify-between items-center">
 
         <!-- Right Side -->
@@ -239,11 +108,13 @@
     </div>
 </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (البحث مصغر هنا) -->
     <section class="hero-section">
         <div class="text-center px-4 w-full">
             <h1 class="text-white text-3xl md:text-5xl font-bold mb-4 hero-text-shadow">تصويتك آمن، سريع، وسري</h1>
             <p class="text-white text-md md:text-xl mb-8 hero-text-shadow font-medium opacity-100">اكتشف خطوات التصويت داخل مركز الاقتراع</p>
+            
+            <!-- صندوق البحث المصغر والمحكم -->
             <div class="bg-white/30 backdrop-blur-md p-1.5 rounded-xl flex flex-col md:flex-row gap-2 max-w-lg mx-auto border border-white/40 shadow-2xl">
                 <input type="text" placeholder="أدخل رقمك الوطني" class="flex-1 p-3 rounded-lg text-gray-800 outline-none text-sm">
                 <button class="bg-teal-brand text-white px-8 py-3 rounded-lg font-bold hover:bg-[#004d4b] transition shadow-lg text-sm">ابحث عن المركز</button>
@@ -257,24 +128,29 @@
             <h2 class="text-teal-brand text-3xl font-bold mb-3">الخدمات</h2>
             <p class="text-gray-500 font-medium">نوفر لك كل ما تحتاجه للمشاركة في الانتخابات بسهولة</p>
         </div>
+
         <div class="bg-teal-brand pt-14 pb-28 px-4">
             <div class="container mx-auto max-w-6xl">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- كرت 1 -->
                     <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center text-center hover:scale-105 transition duration-300">
                         <div class="bg-teal-brand text-white w-12 h-12 rounded-full flex items-center justify-center mb-6 shadow-md"><i class="fas fa-location-dot"></i></div>
                         <h3 class="text-teal-brand font-bold text-lg mb-4">ابحث عن مركز اقتراعك</h3>
                         <p class="text-black text-sm">اعرف موقع مركز الاقتراع الخاص بك بسهولة باستخدام الرقم الوطني</p>
                     </div>
+                    <!-- كرت 2 -->
                     <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center text-center hover:scale-105 transition duration-300">
                         <div class="bg-teal-brand text-white w-12 h-12 rounded-full flex items-center justify-center mb-6 shadow-md"><i class="fas fa-users"></i></div>
                         <h3 class="text-teal-brand font-bold text-lg mb-4">عرض المرشحين</h3>
                         <p class="text-black text-sm">تصفح قوائم المرشحين في دائرتك الانتخابية وبرامجهم بسهولة</p>
                     </div>
+                    <!-- كرت 3 -->
                     <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center text-center hover:scale-105 transition duration-300">
                         <div class="bg-teal-brand text-white w-12 h-12 rounded-full flex items-center justify-center mb-6 shadow-md"><i class="fas fa-circle-check"></i></div>
                         <h3 class="text-teal-brand font-bold text-lg mb-4">تصويت آمن وسري</h3>
                         <p class="text-black text-sm">نضمن لك سرية تامة لخياراتك وحماية كاملة لبيانات الناخب</p>
                     </div>
+                    <!-- كرت 4 -->
                     <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center text-center hover:scale-105 transition duration-300">
                         <div class="bg-teal-brand text-white w-12 h-12 rounded-full flex items-center justify-center mb-6 shadow-md"><i class="fas fa-chart-column"></i></div>
                         <h3 class="text-teal-brand font-bold text-lg mb-4">تابع النتائج</h3>
@@ -285,7 +161,7 @@
         </div>
     </section>
 
-    <!-- آلية التصويت -->
+    <!-- آلية التصويت (سكرول الصور) -->
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4 md:px-10">
             <div class="text-center mb-16">
@@ -302,191 +178,86 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-footer text-white pt-12 pb-8">
-        <div class="container mx-auto px-4 lg:px-20">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
-                <div class="md:w-1/3 flex justify-start order-1">
-                    <img src="img/log2 (2).png" alt="Logo Footer" class="h-24 object-contain">
-                </div>
-                <div class="md:w-2/3 order-2">
-                    <p class="text-sm md:text-md opacity-100 leading-relaxed text-right md:text-left text-white">
-                        منصة رقمية تهدف إلى تعزيز الثقافة في الحملة الانتخابية من خلال توفير معلومات واضحة حول مركز الاقتراع، المرشحين، ونتائج الانتخابات.
-                    </p>
-                </div>
+ <!-- Footer -->
+<footer class="bg-footer text-white pt-12 pb-8">
+    <div class="container mx-auto px-4 lg:px-20">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+            <div class="md:w-1/3 flex justify-start order-1">
+                <img src="img/log2 (2).png" alt="Logo Footer" class="h-24 object-contain">
             </div>
-            <hr class="border-white/10 mb-10">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-right">
-                <div>
-                    <h4 class="footer-border-title mb-6 text-lg">الخدمات</h4>
-                    <ul class="space-y-4 text-sm opacity-80 text-white">
-                        <li>خطوات التصويت</li>
-                        <li>الأمان والشفافية</li>
-                        <li>مركز المساعدة</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="footer-border-title mb-6 text-lg">روابط سريعة</h4>
-                    <ul class="space-y-4 text-sm opacity-80 text-white">
-                        <li>الرئيسية</li>
-                        <li>مركز الاقتراع</li>
-                        <li>المرشحون</li>
-                        <li>النتائج</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="footer-border-title mb-6 text-lg">المساعدة والدعم</h4>
-                    <ul class="space-y-4 text-sm opacity-80 text-white">
-                        <li>الأسئلة الشائعة</li>
-                        <li>تواصل معنا</li>
-                        <li>سياسة الخصوصية</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4 text-sm">ابحث عن مركز اقتراعك</h4>
-                    <div class="flex flex-col gap-3">
-                        <input type="text" placeholder="أدخل رقمك الوطني"
-                            class="p-3 rounded-xl text-gray-800 outline-none w-full bg-white shadow-sm text-sm">
-                        <button class="bg-white text-[#004d4b] font-bold py-2.5 px-8 rounded-full w-fit hover:bg-gray-100 transition shadow-md self-start text-xs">
-                            بحث الآن
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <hr class="border-white/10 mt-16 mb-8">
-            <div class="text-center text-xs opacity-50">
-                <p>© 2024 منصة قرار - جميع الحقوق محفوظة</p>
+            <div class="md:w-2/3 order-2">
+                <p class="text-sm md:text-md opacity-100 leading-relaxed text-right md:text-left text-white">
+                    منصة رقمية تهدف إلى تعزيز الثقافة في الحملة الانتخابية من خلال توفير معلومات واضحة حول مركز الاقتراع ، المرشحين، ونتائج الانتخابات.
+                </p>
             </div>
         </div>
-    </footer>
 
-    <!-- ================= CHAT BOT ================= -->
-    <div id="chat-container">
-        <button id="chat-toggle">
-            <i class="fas fa-comments"></i>
-        </button>
+        <hr class="border-white/10 mb-10">
 
-        <div id="chat-box">
-            <div class="chat-header">
-                <div>
-                    <h3>مساعد الانتخابات</h3>
-                    <span>اسألني عن الانتخابات 😄</span>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-right">
+            <div>
+                <h4 class="footer-border-title mb-6 text-lg">الخدمات</h4>
+                <ul class="space-y-4 text-sm opacity-80 text-white">
+                    <li>خطوات التصويت</li>
+                    <li>الأمان والشفافية</li>
+                    <li>مركز المساعدة</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-border-title mb-6 text-lg">روابط سريعة</h4>
+                <ul class="space-y-4 text-sm opacity-80 text-white">
+                    <li>الرئيسية</li>
+                    <li>مركز الاقتراع</li>
+                    <li>المرشحون</li>
+                    <li>النتائج</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-border-title mb-6 text-lg">المساعدة والدعم</h4>
+                <ul class="space-y-4 text-sm opacity-80 text-white">
+                    <li>الأسئلة الشائعة</li>
+                    <li>تواصل معنا</li>
+                    <li>سياسة الخصوصية</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-4 text-sm">ابحث عن مركز اقتراعك</h4>
+                <div class="flex flex-col gap-3">
+                    <input type="text" placeholder="أدخل رقمك الوطني" 
+                        class="p-3 rounded-xl text-gray-800 outline-none w-full bg-white shadow-sm text-sm">
+                    
+                    <button class="bg-white text-[#004d4b] font-bold py-2.5 px-8 rounded-full w-fit hover:bg-gray-100 transition shadow-md self-start text-xs">
+                        بحث الآن
+                    </button>
                 </div>
-                <button id="close-chat">
-                    <i class="fas fa-xmark"></i>
-                </button>
             </div>
+        </div>
 
-            <div id="messages">
-                <div class="bot-message">
-                    أهلاً فيك 👋<br>
-                    اسألني عن الانتخابات النيابية الأردنية.
-                </div>
-            </div>
+        <hr class="border-white/10 mt-16 mb-8">
 
-            <div class="chat-input-area">
-                <input type="text" id="userInput" placeholder="اكتب سؤالك...">
-                <button onclick="sendMessage()">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
+        <div class="text-center text-xs opacity-50">
+            <p>© 2024 منصة قرار - جميع الحقوق محفوظة</p>
         </div>
     </div>
-    <!-- ================= END CHAT BOT ================= -->
+</footer>
+<script>
+  const links = document.querySelectorAll('nav a');
+  const currentPage = window.location.pathname.split('/').pop();
 
-    <script>
-        // ===== Nav Active Link =====
-        const links = document.querySelectorAll('nav a');
-        const currentPage = window.location.pathname.split('/').pop();
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            link.classList.remove('border-b-2', 'border-[#006967]', 'pb-1');
-            if (href === currentPage || (href === "index.html" && currentPage === "")) {
-                link.classList.add('border-b-2', 'border-[#006967]', 'pb-1', 'text-teal-brand');
-            }
-        });
+  links.forEach(link => {
+    const href = link.getAttribute('href');
 
-        // ===== Chat Bot =====
-        const chatToggle = document.getElementById("chat-toggle");
-        const chatBox = document.getElementById("chat-box");
-        const closeChat = document.getElementById("close-chat");
+    // شيل الـ active من الكل
+    link.classList.remove('border-b-2', 'border-[#006967]', 'pb-1');
 
-        chatToggle.onclick = () => {
-            chatBox.style.display = "flex";
-            chatToggle.style.display = "none";
-        };
-
-        closeChat.onclick = () => {
-            chatBox.style.display = "none";
-            chatToggle.style.display = "block";
-        };
-
-        document.getElementById("userInput").addEventListener("keydown", function(event) {
-            if (event.key === "Enter") sendMessage();
-        });
-
-        function sendMessage() {
-            const input = document.getElementById("userInput");
-            const messages = document.getElementById("messages");
-            const text = input.value.trim();
-            if (!text) return;
-
-            messages.innerHTML += `<div class="user-message">${text}</div>`;
-            input.value = "";
-            messages.scrollTop = messages.scrollHeight;
-
-            const typingId = "typing-" + Date.now();
-            messages.innerHTML += `
-                <div class="typing-indicator" id="${typingId}">
-                    <span></span><span></span><span></span>
-                </div>`;
-            messages.scrollTop = messages.scrollHeight;
-
-            setTimeout(() => {
-                const typingEl = document.getElementById(typingId);
-                if (typingEl) typingEl.remove();
-                const reply = getBotReply(text);
-                messages.innerHTML += `<div class="bot-message">${reply}</div>`;
-                messages.scrollTop = messages.scrollHeight;
-            }, 900);
-        }
-
-        function getBotReply(message) {
-            message = message.toLowerCase();
-
-            if (message.includes("ليش لازم انتخب") || message.includes("شو فايدة الانتخابات") || message.includes("ليش انتخب"))
-                return "لأن صوتك بفرق 😄 الانتخابات هي الطريقة اللي الناس بتختار فيها مين يمثلهم ويطالب بحقوقهم داخل مجلس النواب.";
-
-            else if (message.includes("مين يحقله ينتخب") || message.includes("مين بصوت") || message.includes("مين يحق له ينتخب"))
-                return "أي مواطن أردني عمره 18 سنة وفوق ومعه رقم وطني فعال بقدر يشارك بالانتخابات النيابية.";
-
-            else if (message.includes("هل التصويت سري") || message.includes("التصويت سري") || message.includes("صوتي سري"))
-                return "أكيد 👍 صوتك سري بالكامل، وما حدا بقدر يعرف مين اخترت.";
-
-            else if (message.includes("كيف اختار المرشح") || message.includes("اختيار المرشح") || message.includes("مين اختار"))
-                return "اختار الشخص اللي تشوفه عنده برنامج قوي، وفعلاً قادر يخدم الناس مش بس يحكي شعارات 😄";
-
-            else if (message.includes("ليش الانتخابات مهمة") || message.includes("اهمية الانتخابات") || message.includes("أهمية الانتخابات"))
-                return "لأنها تعطي الناس فرصة يشاركوا بصنع القرار ويختاروا الأشخاص اللي يمثلوا صوتهم بالمجلس.";
-
-            else if (message.includes("مركز الاقتراع") || message.includes("وين أصوت") || message.includes("فين أصوت"))
-                return "تقدر تعرف مركز اقتراعك من خلال إدخال رقمك الوطني في صندوق البحث اللي في أعلى الصفحة 👆";
-
-            else if (message.includes("المرشحين") || message.includes("المرشحون") || message.includes("قوائم"))
-                return "تقدر تتصفح كل المرشحين وبرامجهم من صفحة <a href='candidates.html' style='color:#006967;font-weight:bold;'>المرشحون</a> 😊";
-
-            else if (message.includes("النتائج") || message.includes("نتيجة") || message.includes("الفرز"))
-                return "متابعة النتائج متاحة من صفحة <a href='result.html' style='color:#006967;font-weight:bold;'>النتائج</a> فور بدء الإعلان عنها 📊";
-
-            else if (message.includes("مرحبا") || message.includes("هلا") || message.includes("أهلا") || message.includes("السلام"))
-                return "أهلاً وسهلاً فيك! 👋 أنا هنا أساعدك بكل اللي يخص الانتخابات النيابية الأردنية. شو بدك تعرف؟";
-
-            else if (message.includes("شكرا") || message.includes("شكراً") || message.includes("يسلمو"))
-                return "العفو! يسعدني خدمتك دايماً 😄 لو عندك أي سؤال ثاني أنا هنا.";
-
-            else
-                return "اسألني عن الانتخابات النيابية الأردنية 😄 مثلاً: كيف أعرف مركز اقتراعي؟ أو مين يحق له ينتخب؟";
-        }
-    </script>
+    // حدد الصفحة الحالية
+    if (href === currentPage || (href === "index.html" && currentPage === "")) {
+      link.classList.add('border-b-2', 'border-[#006967]', 'pb-1', 'text-teal-brand');
+    }
+  });
+</script>
 </body>
-</html> 
+</html>
